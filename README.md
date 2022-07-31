@@ -1,6 +1,6 @@
 # A cloud-based workflow to run parallel simulations for metabolic flux analysis
 
-This repository contains the documentation and scripts for using a public cloud (Microsoft Azure) to run Monte Carlo simulations for metabolic flux analysis. This work was developed during my **[MSU Cloud Fellowship 2021-2022](https://msucloudfellowship.github.io/)**. The workflow uses a MATLAB-based software package INCA for demonstration and has been applied to research projects. 
+This repository contains the documentation and scripts for using a public cloud (Microsoft Azure) to run Monte Carlo simulations for metabolic flux analysis. This work was developed during my **[MSU Cloud Fellowship 2021-2022](https://msucloudfellowship.github.io/)**. The workflow uses a MATLAB-based software package [INCA](https://pubmed.ncbi.nlm.nih.gov/24413674/) for demonstration and has been applied to research projects. 
 
 
 
@@ -26,9 +26,9 @@ Before starting, you will need the following:
 
 - A Microsoft Azure account (Note: there will be costs of the Azure services used when you create cloud resources using this guide)
 
-- A license for running MATLAB on Azure ([MATLAB on Azure](https://www.mathworks.com/help/cloudcenter/ug/run-matlab-from-azure-marketplace.html))
+- A license for running [MATLAB on Azure](https://www.mathworks.com/help/cloudcenter/ug/run-matlab-from-azure-marketplace.html)
 
-- A free academic license for INCA (Isotopomer Network Compartmental Analysis) from [http://mfa.vueinnovations.com/licensing](http://mfa.vueinnovations.com/licensing) and download the MATLAB-based software package
+- A free academic license for [INCA](https://pubmed.ncbi.nlm.nih.gov/24413674/) (Isotopomer Network Compartmental Analysis) from [http://mfa.vueinnovations.com/licensing](http://mfa.vueinnovations.com/licensing) and download the MATLAB-based software package
 
 - Linux environment or server (can use a [virtual machine created in the Azure portal](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal))
 
@@ -49,7 +49,7 @@ Refer: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots
 
 It responds with the version number that you have installed, such as `azure-cli 2.35.0` .
 
-To sign into the Azure CLI:
+**To sign into the Azure CLI:**
 
 Run `az login` and sign in with your Azure account credentials in the browser.
 
@@ -59,15 +59,17 @@ Refer: https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli
 
 `az account list --output table`
 
-To switch to a different subscription, use `az account set` with the subscription ID or name you want to switch to (*e.g.*, Cloud Fellowship):
+**To switch to a different subscription:**
 
 `az account set --subscription "Cloud Fellowship"`
+
+use `az account set` with the subscription ID or name you want to switch to (*e.g.*, Cloud Fellowship):
 
 
 
 ### Creating a Resource Group
 
-A resource group is a container that holds related resources for an Azure solution.
+A [**resource group**](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) is a container that holds related resources for an Azure solution.
 
 **To create a resource group using Azure CLI:**
 `az group create --name myResourceGroup --location northcentralus`
@@ -84,7 +86,7 @@ Refer: https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/
 
 ### Creating an Azure file share
 
-Azure file shares can be mounted in Linux via SMB. Azure file shares are deployed into storage accounts, which are top-level objects that represent a shared pool of storage.
+**[Azure file shares](https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction)** can be mounted in Linux via SMB. Azure file shares are deployed into **[storage accounts](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview)**, which are top-level objects that represent a shared pool of storage.
 
 **To create a storage account:**
 
@@ -288,7 +290,7 @@ az vm create \
     --plan-publisher mathworks-inc
 ```
 
-- This creates a VM named matlabVM and adds a user account named matlabuser. 
+- This creates a VM named matlabVM and adds a user account named `matlabuser` and your desired password. 
 - For an image with purchase plan parameters, you pass the URN for `--image` and also **must provide the purchase plan parameters** `--plan-name`, `--plan-product`, and `--plan-publisher`. 
 
 - If you want create a Linux VM that uses secure shell (SSH) keys for authentication, you can add the  `--generate-ssh-keys` parameter to automatically generate an SSH key, and put it in the default key location (~/.ssh). 
@@ -310,7 +312,7 @@ Copy the IP address to be used in the next step.
 
 ### Configuring the VM to run INCA
 
-**To connect to the VM via ssh:**
+**To connect to the VM via ssh:**  
 `ssh matlabuser@[IP-Address]`
 
 **To start MATLAB and enter your login credentials:**
@@ -328,7 +330,7 @@ The following files or directories are needed:
 
 - `mount_fileshare.sh` (the file created earlier for connecting to the file share from a Linux computer)
 
-- `INCAv1.8` (the INCA package for the MFA analysis, you may use a newer version of INCA)
+- `INCAv1.8` (the [INCA](http://mfa.vueinnovations.com/licensing) package you downloaded for the MFA analysis, you may use a newer version of INCA)
 
 - `monteCarloSimulation.m` (a MATLAB script provided in this repository for running the Monte Carlo simulations using INCA)
 - `bashMonteCarloSimulation.sh` (a bash script provided in this repository to run the prior MATLAB script with desired parameters)
@@ -352,13 +354,13 @@ chmod +x mount_fileshare.sh
 df -h
 ```
 
-If the file share is mounted successfully, you will see: 
+If the file share is mounted successfully, you will see something like: 
 
 Filesystem  `//mystoragemfa2022.file.core.windows.net/modelfiles`
 
 Mounted on `/mnt/modelfiles`
 
-We can then test the Monte Carlo simulation script using the uploaded model in the mounted file share `/mnt/modelfiles`:
+We can then test the Monte Carlo simulation script using the uploaded model in the mounted file share `/mnt/modelfiles` as follows:
 
 ```bash
 chmod +x bashMonteCarloSimulation.sh
@@ -436,6 +438,8 @@ The ID of your image version is shown in the output of the command, like
 ```
 
 Copy this ID to be used in the variable `imageVersion` below.
+
+Refer: https://docs.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-custom-images
 
 
 
@@ -536,7 +540,7 @@ https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/tutorial-use-c
 
 ### Using the VM scale set
 
-Deployed VM instances can take the same new input file from the mounted Azure file share, run the simulation script in parallel, and write the simulation outputs and logs back to the file share. 
+For this workflow, the deployed VM instances can take the same new input file from the mounted Azure file share, run the simulation script in parallel, and write the simulation outputs and logs back to the file share. 
 
 **To view information about a scale set:**
 
@@ -566,7 +570,7 @@ You can also use `--output table` parameter to Get public ips of vmss instances 
 
 **To SSH connect to a VM using the public ip with a port number:**
 
-`ssh matlabuser@<public-ip> -p <port-number>`
+`ssh matlabuser@[public-ip] -p [port-number]`
 
 **To run the simulation script in a VM:**
 
