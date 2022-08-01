@@ -63,7 +63,7 @@ Refer: https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli
 
 `az account set --subscription "Cloud Fellowship"`
 
-use `az account set` with the subscription ID or name you want to switch to (*e.g.*, Cloud Fellowship):
+Supply the subscription ID or name you want to switch to (*e.g.*, Cloud Fellowship).
 
 
 
@@ -377,6 +377,7 @@ chmod +x bashMonteCarloSimulation.sh
 We will create a custom images that copies the full VM we just configured for MFA. This custom image can  be used over and over again to create new VMs and be stored in a repository called **[Azure Compute Gallery](https://docs.microsoft.com/en-us/azure/virtual-machines/azure-compute-gallery)** that you can control who has access to.  We will also need to create **[image definitions](https://docs.microsoft.com/en-us/azure/virtual-machines/shared-image-galleries?tabs=azure-cli)**, which is a logical grouping for images and are used to manage information about the **[image versions](https://docs.microsoft.com/en-us/azure/virtual-machines/shared-image-galleries?tabs=azure-cli)** that are created within them.
 
 **To create an Azure Compute Gallery for managing and sharing images:**
+
 `az sig create --resource-group $resourceGroup --gallery-name myGallery`
 
 **To create an image definition:**
@@ -640,7 +641,7 @@ Alternatively, you can delete the resources in the Azure portal to avoid unneces
 
 There are many VM types and sizes to choose. A simple INCA simulation script was run on a few different VMs to compare the simulation time and cost.
 
-| **VM Size** | **vCPUs** | **RAM** | **Max IOPS** | **Time (normalized to<br />the least time needed) ** | **Monthly <br />Cost** |
+| **VM Size** | **vCPUs** | **RAM** | **Max IOPS** | **Time (normalized to<br />the least time needed)** | **Monthly <br />Cost** |
 | ----------- | --------- | ------- | ------------ | ---------------------------------------------------- | ---------------------- |
 | B1ms        | 1         | 2       | 640          | 1.1 X                                                | $15                    |
 | B2s         | 2         | 4       | 1280         | 1 X                                                  | $30                    |
