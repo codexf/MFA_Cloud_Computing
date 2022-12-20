@@ -1,6 +1,6 @@
 # A cloud-based workflow to run parallel simulations for metabolic flux analysis
 
-This repository contains the documentation and scripts for using a public cloud (Microsoft Azure) to run Monte Carlo simulations for metabolic flux analysis. This work was developed during my **[MSU Cloud Fellowship 2021-2022](https://msucloudfellowship.github.io/)**. The workflow uses a MATLAB-based software package [INCA](https://pubmed.ncbi.nlm.nih.gov/24413674/) for demonstration and has been applied to research projects. 
+This repository contains the documentation and scripts for using a public cloud (Microsoft Azure) to run Monte Carlo simulations for metabolic flux analysis. This work was developed during my **[MSU Cloud Fellowship 2021-2022](https://icer.msu.edu/about/announcements/introducing-2021-msu-cloud-computing-fellows)**. The workflow uses a MATLAB-based software package [INCA](https://pubmed.ncbi.nlm.nih.gov/24413674/) for demonstration and has been applied to our research work ([Fu et al. 2022, Nature Plants](https://doi.org/10.1038/s41477-022-01294-9)). 
 
 
 
